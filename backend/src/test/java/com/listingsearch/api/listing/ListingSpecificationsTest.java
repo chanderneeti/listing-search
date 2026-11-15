@@ -110,4 +110,35 @@ public class ListingSpecificationsTest {
         assertEquals("1", result.get(0).getListingId());
     }
 
+    @Test
+    void combinesAllGivenFilters() {
+        save("1", "Reston", "350000", 3, "active", "bright and quiet");
+        save("2", "Reston", "350000", 1, "active", "bright and quiet");  // too few bedrooms
+        save("3", "Reston", "900000", 3, "active", "bright and quiet");  // too expensive
+        save("4", "Fairfax", "350000", 3, "active", "bright and quiet");  // wrong city
+        save("5", "Reston", "350000", 3, "sold", "bright and quiet");  // wrong status
+
+        SearchCriteria criteria = new SearchCriteria(
+                new BigDecimal("300000"), new BigDecimal("400000"), 2,
+                "reston", null, null, null, null, null);
+
+        List<Listing> result = repository.findAll(ListingSpecifications.from(criteria));
+
+        assertEquals(1, result.size());
+        assertEquals("1", result.get(0).getListingId());
+
+    }
+
+    @Test
+    void emptyCriteriaReturnsOnlyActiveListings() {
+        save("1", "Reston", "350000", 3, "active", "x");
+        save("2", "Reston", "350000", 3, "sold", "x");
+
+        SearchCriteria criteria = new SearchCriteria(
+                null, null, null, null, null, null, null, null, null);
+
+        List<Listing> result = repository.findAll(ListingSpecifications.from(criteria));
+        assertEquals(1, result.size());
+        assertEquals("1", result.get(0).getListingId());
+    }
 }

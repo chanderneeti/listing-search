@@ -10,3 +10,10 @@ public interface ListingRepository extends JpaRepository<Listing, Long>,
 
     boolean existsBySourceAndListingId(String source, String listingId);
 }
+
+
+
+
+
+
+
