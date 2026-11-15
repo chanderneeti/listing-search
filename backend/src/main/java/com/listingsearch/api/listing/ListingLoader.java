@@ -10,6 +10,7 @@ import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -37,14 +38,18 @@ public class ListingLoader implements ApplicationRunner {
         l.setZip(i.zip());
         l.setPrice(i.price());
         l.setBedrooms(i.bedrooms());
-        l.setBathrooms(i.bathrooms());
+        l.setBathrooms(toDecimal(i.bathrooms()));
         l.setSqft(i.sqft());
-        l.setLatitude(i.latitude());
-        l.setLongitude(i.longitude());
+        l.setLatitude(toDecimal(i.latitude()));
+        l.setLongitude(toDecimal(i.longitude()));
         l.setListedDate(i.listedDate());
         l.setStatus(i.status());
         l.setDescription(i.description());
         return l;
+    }
+
+    private BigDecimal toDecimal(Double value) {
+        return value == null ? null : BigDecimal.valueOf(value);
     }
 
     @Override

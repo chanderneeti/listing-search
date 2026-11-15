@@ -41,11 +41,17 @@ public class Listing {
     private BigDecimal price;
 
     private int bedrooms;
-    private double bathrooms;
+
+    @Column(name = "bathrooms", nullable = false, precision = 4, scale = 1)
+    private BigDecimal bathrooms;
+
     private int sqft;
 
-    private Double latitude;     // nullable on purpose
-    private Double longitude;    // nullable on purpose
+    @Column(name = "latitude", precision = 9, scale = 6)
+    private BigDecimal latitude;
+
+    @Column(name = "longitude", precision = 9, scale = 6)
+    private BigDecimal longitude;
 
     @Column(name = "listed_date", nullable = false)
     private LocalDate listedDate;
