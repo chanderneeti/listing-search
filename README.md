@@ -17,6 +17,10 @@ default and on Oracle with a profile. The front end is React and TypeScript.
   Free on my own machine), and an admin login to run the setup script once. See "Use Oracle instead
   of H2" below.
 
+## Get the code
+
+Unzip the archive. Open a terminal in the folder that contains `backend` and `frontend`.
+
 ## Run it
 
 Commands are for Windows PowerShell. In Command Prompt, drop the `.\` in front of `mvnw.cmd`. On Mac
