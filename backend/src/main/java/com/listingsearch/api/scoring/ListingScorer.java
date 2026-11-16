@@ -13,6 +13,7 @@ import java.util.List;
 @Component
 public class ListingScorer {
 
+    // score desc, newest first, cheaper first; source + listingId make the order fully deterministic
     private static final Comparator<ScoredListing> ORDER = Comparator
             .comparingDouble(ScoredListing::score).reversed()
             .thenComparing(s -> s.listing().getListedDate(), Comparator.<LocalDate>reverseOrder())
@@ -52,6 +53,7 @@ public class ListingScorer {
     }
 
     private double recency(LocalDate listedDate) {
+        // Math.max(0, ...): a future listing date counts as age 0, not a bonus
         long ageInDays = Math.max(0, ChronoUnit.DAYS.between(listedDate, LocalDate.now(clock)));
         return Math.pow(0.5, ageInDays / properties.halfLifeDays());
     }

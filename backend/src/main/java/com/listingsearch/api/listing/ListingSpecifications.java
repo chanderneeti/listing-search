@@ -32,10 +32,11 @@ public class ListingSpecifications {
     }
 
     public static Specification<Listing> descriptionContains(String keyword) {
+        // explicit escape char: H2 in Oracle mode treats '' as NULL, so the default ESCAPE '' matches nothing
         return (root, query, cb) -> cb.like(
                 cb.lower(root.<String>get("description")),
                 likePattern(keyword),
-                '\\' );
+                '\\');
     }
 
     private static String likePattern(String keyword) {

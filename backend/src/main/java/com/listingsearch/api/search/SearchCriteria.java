@@ -15,6 +15,7 @@ public record SearchCriteria(
         @Min(1) Integer page,
         @Min(1) @Max(50) Integer pageSize) {
 
+    // normalise input once here so the rest of the code never sees blanks or nulls for status/page/pageSize
     public SearchCriteria {
         city = clean(city);
         keyword = clean(keyword);

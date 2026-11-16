@@ -1,5 +1,6 @@
 import type {FieldError, FormValues} from '../types/listing.ts'
 
+// mirrors the server rules for instant feedback; the server still validates and is the source of truth
 export function validateForm(values: FormValues): FieldError[] {
     const errors: FieldError[] = []
 

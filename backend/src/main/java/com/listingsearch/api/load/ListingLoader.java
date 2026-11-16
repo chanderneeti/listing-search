@@ -50,6 +50,7 @@ public class ListingLoader implements ApplicationRunner {
         return l;
     }
 
+    // BigDecimal.valueOf(double) avoids binary noise like 1.5000000000000001
     private BigDecimal toDecimal(Double value) {
         return value == null ? null : BigDecimal.valueOf(value);
     }

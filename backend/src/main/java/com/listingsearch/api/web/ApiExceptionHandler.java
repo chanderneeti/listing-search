@@ -1,5 +1,6 @@
 package com.listingsearch.api.web;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -27,6 +29,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.BAD_REQUEST, "One or more search parameters are invalid");
         problem.setTitle("Invalid search parameters");
         problem.setProperty("errors", errors);
+        log.warn("Rejected search request: {}", errors);
         return ResponseEntity.badRequest().body(problem);
     }
 

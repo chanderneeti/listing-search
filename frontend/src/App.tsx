@@ -41,12 +41,14 @@ function App() {
         setFieldErrors([])
         try {
             setResult(await searchListings({ ...filters, page, pageSize: size }))
+            // filters as last submitted; paging reuses these so editing the form doesn't change the page you're on
             setSubmitted(filters)
         } catch (e) {
             setResult(null)
             if (e instanceof ApiValidationError) {
                 setFieldErrors(e.errors)
             } else {
+                console.error(e)
                 setError('Something went wrong. Please try again.')
             }
         } finally {
