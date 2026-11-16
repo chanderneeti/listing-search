@@ -1,5 +1,7 @@
 package com.listingsearch.api.listing;
 
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDate;
@@ -7,6 +9,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 
+@Component
 public class ListingScorer {
 
     private static final Comparator<ScoredListing> ORDER = Comparator

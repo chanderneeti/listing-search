@@ -9,6 +9,7 @@ public interface ListingRepository extends JpaRepository<Listing, Long>,
         JpaSpecificationExecutor<Listing> {
 
     boolean existsBySourceAndListingId(String source, String listingId);
+    boolean existsByCityIgnoreCase(String city);
 }
 
 
