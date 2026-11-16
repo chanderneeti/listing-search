@@ -137,7 +137,7 @@ public class ListingSearchControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors").isNotEmpty())
                 .andExpect(jsonPath("$.errors[0].field").value("minPrice"))
-                .andExpect(jsonPath("$.errors[0].message").value("invalid value 'abc'"))
+                .andExpect(jsonPath("$.errors[0].message").value("must be a number"))
                 .andExpect(jsonPath("$.title").value("Invalid search parameters"))
                 .andExpect(jsonPath("$.status").value(400));
     }

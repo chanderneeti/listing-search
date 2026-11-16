@@ -1,122 +1,106 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { ApiValidationError, searchListings } from './api/listingsApi'
+import Pagination from './components/Pagination'
+import ResultsTable from './components/ResultsTable'
+import SearchForm from "./components/SearchForm";
+import type {FieldError, FormValues, SearchResponse} from './types/listing'
+import { validateForm } from './validation/formValidation.ts'
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+const emptyForm: FormValues = {
+    minPrice: '',
+    maxPrice: '',
+    minBedrooms: '',
+    city: '',
+    keyword: '',
+    targetBudget: '',
+    status: 'active'
 }
 
+function App() {
+    const [form, setForm] = useState<FormValues>(emptyForm)
+    const [submitted, setSubmitted] = useState<FormValues>(emptyForm)
+    const [pageSize, setPageSize] = useState(10)
+    const [result, setResult] = useState<SearchResponse | null>(null)
+    const [loading, setLoading] = useState(false)
+    const [fieldErrors, setFieldErrors] = useState<FieldError[]>([])
+    const [error, setError] = useState<string | null>(null)
+    const clientErrors = validateForm(form)
+    const errors = [...clientErrors, ...fieldErrors]
+
+    function resetSearch() {
+        setForm(emptyForm)
+        setSubmitted(emptyForm)
+        setResult(null)
+        setFieldErrors([])
+        setError(null)
+    }
+
+    async function runSearch(filters: FormValues, page: number, size:number) {
+        setLoading(true);
+        setError(null);
+        setFieldErrors([])
+        try {
+            setResult(await searchListings({ ...filters, page, pageSize: size }))
+            setSubmitted(filters)
+        } catch (e) {
+            setResult(null)
+            if (e instanceof ApiValidationError) {
+                setFieldErrors(e.errors)
+            } else {
+                setError('Something went wrong. Please try again.')
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return (
+        <main className="page">
+            <h1>Listing Search</h1>
+
+            <SearchForm
+                values={form}
+                errors={errors}
+                loading={loading}
+                onChange={(field, value) => {
+                    setForm((prev) => ({ ...prev, [field]: value }))
+                    setFieldErrors([])
+                }}
+                onSubmit={() => runSearch(form, 1, pageSize)}
+                onReset={resetSearch}
+            />
+
+            {error && <p className="error">{error}</p>}
+            {loading && !result && <p className="summary">Loading…</p>}
+            {result && (
+                <>
+                    <div className="summary-row">
+                        <div>
+                            <p className="summary">{result.totalItems} listings found</p>
+                            {result.message && (
+                                <p className="summary">
+                                    <em>{result.message}</em>
+                                </p>
+                            )}
+                        </div>
+                        {result.totalPages > 0 && (
+                            <Pagination
+                                page={result.page}
+                                totalPages={result.totalPages}
+                                pageSize={pageSize}
+                                loading={loading}
+                                onPageChange={(page) => runSearch(submitted, page, pageSize)}
+                                onPageSizeChange={(size) => {
+                                    setPageSize(size)
+                                    runSearch(submitted, 1, size)
+                                }}
+                            />
+                        )}
+                    </div>
+                    {result.items.length > 0 && <ResultsTable items={result.items} />}
+                </>
+            )}
+        </main>
+    )
+}
 export default App

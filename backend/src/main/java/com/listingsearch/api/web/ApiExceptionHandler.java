@@ -1,5 +1,6 @@
 package com.listingsearch.api.web;
 
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,7 +32,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private String messageOf(FieldError e) {
         if (e.isBindingFailure()) {
-            return "invalid value '" + e.getRejectedValue() + "'";
+            if (e.contains(TypeMismatchException.class)) {
+                Class<?> type = e.unwrap(TypeMismatchException.class).getRequiredType();
+                if (type != null && Number.class.isAssignableFrom(type)) {
+                    return "must be a number";
+                }
+            }
+            return "invalid value";
         }
         return e.getDefaultMessage() == null ? "invalid" : e.getDefaultMessage();
     }
