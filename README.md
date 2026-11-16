@@ -19,7 +19,12 @@ default and on Oracle with a profile. The front end is React and TypeScript.
 
 ## Get the code
 
-Unzip the archive. Open a terminal in the folder that contains `backend` and `frontend`.
+Clone the repository (or unzip the archive if you received a zip):
+
+    git clone [GitHub repository URL]
+    cd [repository folder name]
+
+Open a terminal in the folder that contains `backend` and `frontend`.
 
 ## Run it
 
