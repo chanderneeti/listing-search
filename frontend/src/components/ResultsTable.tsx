@@ -19,7 +19,7 @@ export default function ResultsTable({items}: Props) {
                 <th>City</th>
                 <th className="num">Price</th>
                 <th className="num">Beds</th>
-                <th className="num">Score</th>
+                <th className="num">Relevance score</th>
             </tr>
             </thead>
             <tbody>
