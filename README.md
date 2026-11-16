@@ -21,8 +21,8 @@ default and on Oracle with a profile. The front end is React and TypeScript.
 
 Clone the repository (or unzip the archive if you received a zip):
 
-    git clone [GitHub repository URL]
-    cd [repository folder name]
+    git clone https://github.com/chanderneeti/listing-search.git
+    cd listing-search
 
 Open a terminal in the folder that contains `backend` and `frontend`.
 
