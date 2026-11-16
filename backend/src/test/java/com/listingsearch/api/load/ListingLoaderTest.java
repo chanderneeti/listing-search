@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@SpringBootTest(properties = {
+        "listings.data-files=classpath:data/sample_listings.json",
+        "spring.datasource.url=jdbc:h2:mem:loadertest;MODE=Oracle;DB_CLOSE_DELAY=-1"})
 public class ListingLoaderTest {
 
     @Autowired
