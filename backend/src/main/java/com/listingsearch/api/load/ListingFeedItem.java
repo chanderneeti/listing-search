@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.load;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

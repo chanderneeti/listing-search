@@ -1,5 +1,6 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.load;
 
+import com.listingsearch.api.listing.ListingRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

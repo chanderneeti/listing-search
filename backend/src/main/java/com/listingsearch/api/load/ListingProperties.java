@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.load;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;

@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.search;
 
 import java.util.regex.Pattern;
 

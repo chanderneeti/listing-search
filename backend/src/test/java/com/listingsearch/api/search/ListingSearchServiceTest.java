@@ -1,5 +1,9 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.search;
 
+import com.listingsearch.api.listing.Listing;
+import com.listingsearch.api.listing.ListingRepository;
+import com.listingsearch.api.scoring.ListingScorer;
+import com.listingsearch.api.scoring.ScoringProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

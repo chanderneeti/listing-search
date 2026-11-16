@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.search;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

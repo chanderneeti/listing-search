@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.scoring;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -1,5 +1,6 @@
 package com.listingsearch.api.listing;
 
+import com.listingsearch.api.search.SearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;

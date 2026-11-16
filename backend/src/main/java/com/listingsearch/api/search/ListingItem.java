@@ -1,4 +1,7 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.search;
+
+import com.listingsearch.api.listing.Listing;
+import com.listingsearch.api.scoring.ScoredListing;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

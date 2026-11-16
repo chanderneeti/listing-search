@@ -1,5 +1,6 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.scoring;
 
+import com.listingsearch.api.listing.Listing;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

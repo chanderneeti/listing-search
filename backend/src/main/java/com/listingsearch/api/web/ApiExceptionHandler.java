@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.web;
 
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;

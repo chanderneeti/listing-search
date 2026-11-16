@@ -1,4 +1,4 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.search;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;

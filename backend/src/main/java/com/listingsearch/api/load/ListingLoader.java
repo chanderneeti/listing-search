@@ -1,5 +1,7 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.load;
 
+import com.listingsearch.api.listing.Listing;
+import com.listingsearch.api.listing.ListingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

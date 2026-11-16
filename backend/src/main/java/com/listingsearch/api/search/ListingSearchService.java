@@ -1,5 +1,8 @@
-package com.listingsearch.api.listing;
+package com.listingsearch.api.search;
 
+import com.listingsearch.api.listing.*;
+import com.listingsearch.api.scoring.ListingScorer;
+import com.listingsearch.api.scoring.ScoredListing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
